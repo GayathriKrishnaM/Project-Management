@@ -74,6 +74,19 @@ uvicorn main:app --reload
 Server runs at:
 
 http://127.0.0.1:8000
+
+🌐 Frontend Integration (Axios)
+
+This project includes a frontend application (running on http://localhost:3000) that communicates with the backend API using Axios.
+
+🚀 Frontend Setup
+npm install
+npm run dev
+
+Frontend runs at:
+
+http://localhost:3000
+
 🔐 Authentication Flow
 Step 1: Request OTP
 POST /auth/request-login?email=admin@example.com
