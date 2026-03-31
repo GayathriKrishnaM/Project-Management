@@ -55,80 +55,81 @@ Project → Tasks: One-to-Many
 User Roles: admin and developer
 
 # Setup Instructions
-1. Clone the Repository
-git clone <repo-url>
-cd project-management
+1. Clone the Repository:
+* git clone <repo-url>
+* cd project-management
 
-2. Create Virtual Environment
-python -m venv venv
+2. Create Virtual Environment and Activate:
+* python -m venv venv
 
 Activate:
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
+* source venv/bin/activate   # Linux/Mac
+* venv\Scripts\activate      # Windows
 
 3. Install Dependencies
-pip install -r requirements.txt
+* pip install -r requirements.txt
 
 4. Configure Environment Variables
-.env file
+* .env file
 
 5. Run Migrations 
-alembic upgrade head
+* alembic upgrade head
 
 6. Start Server
-uvicorn main:app --reload
-Server runs at:
-http://127.0.0.1:8000
+* uvicorn main:app --reload
+* Server runs at:
+* http://127.0.0.1:8000
 
 # Frontend Integration (Axios)
 Frontend communicates with backend using Axios.
 
 Frontend Setup:
-npm install
-npm run dev
+* npm install
+* npm run dev
 
 Frontend runs at:
-http://localhost:3000
+* http://localhost:3000
 
 # Authentication Flow
 Step 1: Request OTP
-POST /auth/request-login?email=admin@example.com
-OTP is generated
-Currently printed in terminal (development mode)
+* POST /auth/request-login?email=admin@example.com
+* OTP is generated
+* Currently printed in terminal (development mode)
 Step 2: Verify OTP
-POST /auth/verify-login
+* POST /auth/verify-login
 Step 3: Use Token
-Authorization: Bearer <access_token>
+* Authorization: Bearer <access_token>
 
 # Auth APIs
-1. Create User
+1. Create User:
 POST /auth/create_user
-2. Request Login
+2. Request Login:
 POST /auth/request-login
-3. Verify Login
+3. Verify Login:
 POST /auth/verify-login
-4. Test Auth
+4. Test Auth:
 GET /auth/test-auth
-List Users
-5. GET /auth/users
+5. List Users:
+GET /auth/users
+
 Authorization: Bearer token
 
 # Project APIs
-1. Create Project
+1. Create Project:
 POST /projects
-2. List Projects
+2. List Projects:
 GET /projects/
-3. Update Project
+3. Update Project:
 POST /projects/?project_id=8&name=NewName
-4. Delete Project
+4. Delete Project:
 DELETE /projects/{id}
 
 # Task APIs
-1. Create Task
+1. Create Task:
 POST /tasks/
-2. Assign Task
+2. Assign Task:
 PATCH /tasks/{task_id}/assign?user_id=9
-3. Update Status
+3. Update Status:
 PATCH /tasks/{task_id}?status=done
-4. List Tasks
+4. List Tasks:
 GET /tasks/
