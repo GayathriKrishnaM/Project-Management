@@ -1,0 +1,738 @@
+{
+  "info": {
+    "_postman_id": "02496d7b-c496-421e-a6c3-83c38954e692",
+    "name": "Project Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53630568"
+  },
+  "item": [
+    {
+      "name": "request-login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "email",
+            "value": "test@gmail.com",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/request-login?email=admin@example.com",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "auth",
+            "request-login"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "admin@example.com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "verify-login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Extract access token from JSON response and store in active environment",
+              "pm.test(\"Extract access_token\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    let json;",
+              "    try {",
+              "        json = pm.response.json();",
+              "    } catch (e) {",
+              "        pm.expect.fail(\"Response is not valid JSON: \" + e.message);",
+              "    }",
+              "",
+              "    const token = json.access_token || json.token || json.jwt || json.accessToken;",
+              "    pm.expect(token, \"Expected an access token field in response body\").to.be.a(\"string\").and.not.be.empty;",
+              "",
+              "    pm.environment.set(\"access_token\", token);",
+              "    if (json.token_type) {",
+              "        pm.environment.set(\"token_type\", json.token_type);",
+              "    }",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/verify-login?email=gayathri@example.com&otp=171822&otp_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdheWF0aHJpQGV4YW1wbGUuY29tIiwib3RwIjoiMDYyYjlkMWJmZTVmNWM0NzMxNGEyNzdlNDUyMzQyZmVjMmU1NDFlMGY4YjY1ODRjM2VmNjMyMGI4MTE1NjkyYiIsImV4cCI6MTc3NDk0NjIwMiwidHlwZSI6Im90cCJ9.OW5s3QH6R03KCX3g1Z6R7HCVANNYY9V8uuW4b4S3r9I",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "auth",
+            "verify-login"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "gayathri@example.com"
+            },
+            {
+              "key": "otp",
+              "value": "171822"
+            },
+            {
+              "key": "otp_token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdheWF0aHJpQGV4YW1wbGUuY29tIiwib3RwIjoiMDYyYjlkMWJmZTVmNWM0NzMxNGEyNzdlNDUyMzQyZmVjMmU1NDFlMGY4YjY1ODRjM2VmNjMyMGI4MTE1NjkyYiIsImV4cCI6MTc3NDk0NjIwMiwidHlwZSI6Im90cCJ9.OW5s3QH6R03KCX3g1Z6R7HCVANNYY9V8uuW4b4S3r9I"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "list_users",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjksImV4cCI6MTc3NDk1MTk2NSwidHlwZSI6ImFjY2VzcyJ9.cYhbD_qSlrnhfzjxJffzaABIKJDQ8-mMxvRhse74xls",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/users",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "auth",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 2xx', function () {",
+              "  pm.expect(pm.response.code).to.be.within(200, 299);",
+              "});",
+              "",
+              "pm.test('Response is JSON (if body present)', function () {",
+              "  pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Response has user fields when present', function () {",
+              "  const json = pm.response.json();",
+              "  const fields = ['id', 'email', 'name', 'role'];",
+              "",
+              "  pm.expect(json).to.be.an('object');",
+              "",
+              "  fields.forEach((f) => {",
+              "    if (Object.prototype.hasOwnProperty.call(json, f) && json[f] !== null) {",
+              "      if (f === 'id') {",
+              "        pm.expect([ 'string', 'number' ]).to.include(typeof json[f]);",
+              "      } else {",
+              "        pm.expect(json[f]).to.be.a('string');",
+              "      }",
+              "    }",
+              "  });",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"user\",\n  \"email\": \"user@example.com\",\n  \"role\": \"developer\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/create_user",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "auth",
+            "create_user"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "user",
+              "disabled": true
+            },
+            {
+              "key": "email",
+              "value": "user@example.com",
+              "disabled": true
+            },
+            {
+              "key": "role",
+              "value": "developer",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create_projects",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"API\",\n  \"description\": \"interface\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/projects?name=API&description=interface",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "projects"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "API",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "interface",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "list_projects",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/projects/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "projects",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete_project",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/projects/5?project_id=5",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "projects",
+            "5"
+          ],
+          "query": [
+            {
+              "key": "project_id",
+              "value": "5",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update_project",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/projects/?project_id=8&name=Exceptions",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "projects",
+            ""
+          ],
+          "query": [
+            {
+              "key": "project_id",
+              "value": "8"
+            },
+            {
+              "key": "name",
+              "value": "Exceptions"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create_task",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjksImV4cCI6MTc3NDk0MzM3MiwidHlwZSI6ImFjY2VzcyJ9.v8qjSjtcTT5niexHFbRR_HMnQIiL80DoGNYrgHQ4joU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"validation\",\"project_id\":8,\"assigned_to\":null,\"description\":\"new task\",\"status\":\"in_progress\",\"due_date\":\"2026-03-31\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "tasks",
+            ""
+          ],
+          "query": [
+            {
+              "key": "title",
+              "value": "validation",
+              "disabled": true
+            },
+            {
+              "key": "project_id",
+              "value": "8",
+              "disabled": true
+            },
+            {
+              "key": "description",
+              "value": "new task",
+              "disabled": true
+            },
+            {
+              "key": "status",
+              "value": "in_progress",
+              "disabled": true
+            },
+            {
+              "key": "due_date",
+              "value": "2026-03-31",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "assign_task",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/10/assign?user_id=9",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "tasks",
+            "10",
+            "assign"
+          ],
+          "query": [
+            {
+              "key": "user_id",
+              "value": "9"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update_status",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/10/?status=done",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "tasks",
+            "10",
+            ""
+          ],
+          "query": [
+            {
+              "key": "task_id",
+              "value": "10",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "status",
+              "value": "done",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "list_task",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjksImV4cCI6MTc3NDk1MTk2NSwidHlwZSI6ImFjY2VzcyJ9.cYhbD_qSlrnhfzjxJffzaABIKJDQ8-mMxvRhse74xls",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "tasks",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "test-auth",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjksImV4cCI6MTc3NDk1MTk2NSwidHlwZSI6ImFjY2VzcyJ9.cYhbD_qSlrnhfzjxJffzaABIKJDQ8-mMxvRhse74xls",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/test-auth",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "auth",
+            "test-auth"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
