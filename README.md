@@ -34,19 +34,19 @@ Stores:
 
 
 # Entity Relationship (ER) Diagram
-                        +------------+        +-------------+        +-------------+
-                        |   Users    |        |  Projects   |        |    Tasks    |
-                        +------------+        +-------------+        +-------------+
-                        | id (PK)    |        | id (PK)     |        | id (PK)     |
-                        | name       |        | name        |        | title       |
-                        | email      |        | description |        | description |
-                        | role       |        +-------------+        | status      |
-                        +------------+                |              | due_date    |
-                              |                       |              | project_id  |
-                              |                       |              | assigned_to |
-                              |                       |              +-------------+
-                              |                       |                     |
-                              +-----------------------+---------------------+
+                    +------------+        +-------------+        +------------------+
+                    |   Users    |        |  Projects   |        |    Tasks         |
+                    +------------+        +-------------+        +------------------+
+                    | id (PK)    |        | id (PK)     |        | id (PK)          |
+                    | name       |        | name        |        | title            |
+                    | email      |        | description |        | description      |
+                    | role       |        | user_id (FK)|        | status           |
+                    +------------+        +-------------+        | due_date         |
+                          |                       |              | project_id (FK)  |
+                          |                       |              | assigned_to      |
+                          |                       |              +------------------+
+                          |                       |                     |
+                          +-----------------------+---------------------+
 
 
 Relationships:
