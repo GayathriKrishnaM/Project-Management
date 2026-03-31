@@ -50,9 +50,9 @@ Stores:
 
 
 Relationships:
-User → Tasks: One-to-Many (assigned_to)
-Project → Tasks: One-to-Many
-User Roles: admin and developer
+* User → Tasks: One-to-Many (assigned_to)
+* Project → Tasks: One-to-Many
+* User Roles: admin and developer
 
 # Setup Instructions
 1. Clone the Repository:
